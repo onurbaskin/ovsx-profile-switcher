@@ -1,30 +1,24 @@
 {
 	"name": "profile-switcher",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/onurbaskin/ovsx-profile-switcher.git"
 	},
 	"main": "./out/extension.js",
 	"devDependencies": {
-		"@types/node": "^20.0.0",
-		"@types/vscode": "^1.106.0",
-		"typescript": "^5.0.0"
-	},
-	"dependencies": {
-		"ovsx": "^0.10.6"
+		"@types/node": "^24.10.1",
+		"@types/vscode": "1.99.0",
+		"@vscode/vsce": "^3.7.0",
+		"esbuild": "^0.27.0",
+		"ovsx": "^0.10.6",
+		"typescript": "^5.9.3"
 	},
 	"activationEvents": [
 		"onStartupFinished"
 	],
 	"categories": [
 		"Other"
-	],
-	"keywords": [
-		"profile",
-		"workspace",
-		"settings",
-		"monorepo"
 	],
 	"contributes": {
 		"commands": [
@@ -72,18 +66,28 @@
 			}
 		}
 	},
-	"displayName": "Profile Switcher",
 	"description": "Automatically switches VS Code profiles based on your workspace settings. Just define your preferred profile in .vscode/settings.json, and it'll switch automatically every time you open the project.",
-	"icon": "media/icons/profile-switcher-logo.png",
+	"displayName": "Profile Switcher",
 	"engines": {
-		"vscode": "^1.106.0"
+		"vscode": "^1.99.0"
 	},
+	"icon": "media/icons/profile-switcher-logo.png",
+	"keywords": [
+		"profile",
+		"workspace",
+		"settings",
+		"monorepo"
+	],
 	"license": "MIT",
 	"publisher": "onurbaskin",
 	"scripts": {
-		"vscode:prepublish": "bun run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"publish": "ovsx publish"
+		"vscode:prepublish": "npm install && bun run compile",
+		"compile": "node esbuild.config.js --production",
+		"watch": "node esbuild.config.js --watch",
+		"pretest": "bun run compile && bun run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js",
+		"package": "vsce package",
+		"publish": "npm install && ovsx publish"
 	}
 }
