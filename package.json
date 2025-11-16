@@ -1,0 +1,89 @@
+{
+	"name": "profile-switcher",
+	"version": "0.1.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/onurbaskin/ovsx-profile-switcher.git"
+	},
+	"main": "./out/extension.js",
+	"devDependencies": {
+		"@types/node": "^20.0.0",
+		"@types/vscode": "^1.106.0",
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"ovsx": "^0.10.6"
+	},
+	"activationEvents": [
+		"onStartupFinished"
+	],
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"profile",
+		"workspace",
+		"settings",
+		"monorepo"
+	],
+	"contributes": {
+		"commands": [
+			{
+				"command": "profileSwitcher.selectProfile",
+				"title": "Select Profile for Workspace",
+				"category": "Profile Switcher"
+			},
+			{
+				"command": "profileSwitcher.selectProfileForFolder",
+				"title": "Select Profile for Folder",
+				"category": "Profile Switcher"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"command": "profileSwitcher.selectProfileForFolder",
+					"when": "explorerResourceIsFolder",
+					"group": "profile-switcher"
+				}
+			]
+		},
+		"configuration": {
+			"title": "Profile Switcher",
+			"properties": {
+				"profileSwitcher.autoSwitch": {
+					"type": "boolean",
+					"default": true,
+					"description": "Automatically switch to the configured profile when opening a workspace"
+				},
+				"profileSwitcher.workspaceProfile": {
+					"type": "string",
+					"default": "",
+					"description": "VS Code profile to use for this workspace"
+				},
+				"profileSwitcher.directoryProfiles": {
+					"type": "object",
+					"default": {},
+					"description": "Map of relative directory paths to VS Code profile names. Example: {\"backend/\": \"python\", \"frontend/\": \"javascript/typescript\"}",
+					"additionalProperties": {
+						"type": "string"
+					}
+				}
+			}
+		}
+	},
+	"displayName": "Profile Switcher",
+	"description": "Automatically switches VS Code profiles based on your workspace settings. Just define your preferred profile in .vscode/settings.json, and it'll switch automatically every time you open the project.",
+	"icon": "media/icons/profile-switcher-logo.png",
+	"engines": {
+		"vscode": "^1.106.0"
+	},
+	"license": "MIT",
+	"publisher": "onurbaskin",
+	"scripts": {
+		"vscode:prepublish": "bun run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"publish": "ovsx publish"
+	}
+}
