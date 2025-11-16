@@ -3,6 +3,16 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![VS Code Version](https://img.shields.io/badge/VS%20Code-1.106.0+-blue.svg)](https://code.visualstudio.com/)
 
+> **⚠️ Project Status: Paused**
+> 
+> This extension is currently **paused** because the VS Code Extensions API does not yet support programmatically switching profiles. The required API functionality is not available at this time.
+> 
+> As soon as VS Code provides the necessary API support for profile switching, I will resume development and publish this extension. Until then, the project remains on hold.
+> 
+> Thank you for your interest, and I'll update this notice once the API becomes available!
+
+---
+
 Automatically switches VS Code profiles based on your workspace settings. Just define your preferred profile in `.vscode/settings.json`, and it'll switch automatically every time you open the project.
 
 ## Features
